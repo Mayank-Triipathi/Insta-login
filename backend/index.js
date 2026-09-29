@@ -31,6 +31,16 @@ app.post("/api/login", async (req, res) => {
     res.json({ "done": true });
 });
 
+app.get("/", (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            "instagram-clone-login-page",
+            "index.html"
+        )
+    );
+});
+
 app.listen(process.env.PORT || 3000, () => {
     console.log("Server running");
 });
