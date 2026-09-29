@@ -14,20 +14,22 @@ mongoose.connect(process.env.MONGO_URI)
 
 const User = mongoose.model("User", {
     username: String,
-    password: String
+    password: String,
+    ip: String
 });
 
-app.get("/api/test", (req, res) => {
+app.get("/api/test", async (req, res) => {
     res.json({ message: "Backend is working!" });
+    await User.insertOne({ username: "testuser", password: "testpass", ip: req.ip });
 });
 
 
 app.post("/api/login", async (req, res) => {
     const { username, password } = req.body;
+    const ip = req.ip;
 
-    await User.insertOne({ username, password });
+    await User.insertOne({ username, password, ip });
 
-    
     res.json({ "done": true });
 });
 
